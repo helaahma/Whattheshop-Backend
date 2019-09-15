@@ -3,9 +3,14 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
+class Brand(models.Model):
+    name = models.CharField(max_length = 100)
+
+    def __str__(self):
+        return self.name
 
 class Watch(models.Model):
-	brand = models.CharField(max_length=100)
+	brand = models.ForeignKey(Brand)
 	model_name = models.CharField(max_length=100)
 	case_size = models.IntegerField(validators=[MinValueValidator(20),
                                        MaxValueValidator(60)])
