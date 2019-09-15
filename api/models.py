@@ -10,22 +10,22 @@ class Watch(models.Model):
 	case_size = models.IntegerField(validators=[MinValueValidator(20),
                                        MaxValueValidator(60)])
 	thickness = models.IntegerField(validators=[MinValueValidator(5),
-                                       MaxValueValidator(30)])
+                                       MaxValueValidator(30)],blank=True,null=True)
 	lug_width = models.IntegerField(validators=[MinValueValidator(10),
-                                       MaxValueValidator(30)])
+                                       MaxValueValidator(30)],blank=True,null=True)
 	lug_to_lug = models.IntegerField(validators=[MinValueValidator(30),
-                                       MaxValueValidator(70)])
+                                       MaxValueValidator(70)],blank=True,null=True)
 	water_resistance = models.IntegerField(validators=[MinValueValidator(0),
-                                       MaxValueValidator(20000)])
-	manufacture_year = models.IntegerField(validators=[MinValueValidator(1700)])
+                                       MaxValueValidator(20000)],blank=True,null=True)
+	manufacture_year = models.IntegerField(validators=[MinValueValidator(1700)],blank=True,null=True)
 	price = models.DecimalField(max_digits=10, decimal_places=3)
 	user = models.ForeignKey(User, on_delete=models.CASCADE,  related_name="watches")
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
 	availability = models.BooleanField(default=True)
 	box_papers = models.CharField(max_length=100)
-	strap = models.CharField(max_length=100)
-	functions = models.CharField(max_length=100)
+	strap = models.CharField(max_length=100,blank=True,null=True)
+	functions = models.CharField(max_length=100,blank=True,null=True)
 
 	MOVEMENT_CHOICES = [
 		('automatic', 'automatic'),
@@ -33,7 +33,7 @@ class Watch(models.Model):
 		('quartz', 'quartz'),
 	]
 	movement = models.CharField(
-		max_length=10,
+		max_length=12,
 		choices=MOVEMENT_CHOICES,
 		default=False,
 	)
@@ -60,8 +60,8 @@ class Watch(models.Model):
 		choices=DELIVERY_CHOICES,
 		default='in_person',
 	)
-	description = models.TextField(max_length=2000)
-	image = models.ImageField()
+	description = models.TextField(max_length=2000,blank=True,null=True)
+	image = models.ImageField(blank=True,null=True)
 
 	
 	def __str__(self):
