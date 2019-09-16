@@ -10,7 +10,7 @@ class Brand(models.Model):
         return self.name
 
 class Watch(models.Model):
-	brand = models.ForeignKey(Brand)
+	brand = models.ForeignKey(Brand, on_delete=models.CASCADE,  related_name="brand")
 	model_name = models.CharField(max_length=100)
 	case_size = models.IntegerField(validators=[MinValueValidator(20),
                                        MaxValueValidator(60)])
