@@ -31,6 +31,7 @@ class WatchDetailSerializer(serializers.ModelSerializer):
 
 
 
+
 #comments & ratings and profile
 class CommentSerializer(serializers.Serializer):
     class Meta:
