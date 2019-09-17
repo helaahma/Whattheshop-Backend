@@ -10,6 +10,12 @@ from rest_framework.permissions import IsAuthenticated
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
 
+class ProfileUpdate(RetrieveUpdateAPIView):
+	queryset = Profile.objects.all()
+	serializer_class = ProfileSerializer
+	lookup_field = 'id'
+	lookup_url_kwarg = 'profile_id'
+
 class WatchList(ListAPIView):
 	queryset = Watch.objects.all()
 	serializer_class = WatchListSerializer
@@ -26,6 +32,7 @@ class UpdateWatch(RetrieveUpdateAPIView):
 	lookup_field = 'id'
 	lookup_url_kwarg = 'watch_id'
 	permission_classes = [IsAuthenticated, IsWatchOwner]
+	serializer_class = WatchDetailSerializer
 
 class DeleteWatch(DestroyAPIView):
 	queryset = Watch.objects.all()
@@ -37,8 +44,8 @@ class CreateWatch(CreateAPIView):
 	serializer_class = WatchDetailSerializer
 	permission_classes = [IsAuthenticated]
 
-	def perform_create(self, serializer):
-		serializer.save(user=self.request.user)
+	def perform_create(self,serializer):
+			serializer.save(user=self.request.user)
 
 
 

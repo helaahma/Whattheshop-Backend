@@ -12,7 +12,8 @@ class Brand(models.Model):
         return self.name
 
 class Watch(models.Model):
-	brand = models.ForeignKey(Brand, on_delete=models.CASCADE,  related_name="brand")
+#	brand = models.ForeignKey(Brand, on_delete=models.CASCADE,  related_name="brand")
+	brand = models.CharField(max_length=100)
 	model_name = models.CharField(max_length=100)
 	case_size = models.IntegerField(validators=[MinValueValidator(20),
                                        MaxValueValidator(60)])
@@ -78,7 +79,7 @@ class Cart(models.Model):
 	watch=models.ForeignKey(Watch,on_delete=models.CASCADE, related_name='watch')
 	total= models.PositiveIntegerField(default=0)
 
-@receiver(pre_save, sender=Cart)
+#@receiver(pre_save, sender=Cart)
 # To be expanded as need after meeting
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
