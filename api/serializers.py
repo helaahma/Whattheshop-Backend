@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Brand, Watch, Profile
+from .models import Brand, Watch, Profile,Cart
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -26,11 +26,7 @@ class WatchListSerializer(serializers.ModelSerializer):
 class WatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=Watch
-        exclude= 'user'
-
-
-
-
+        exclude= ['user']
 
 #comments & ratings and profile
 class CommentSerializer(serializers.Serializer):
@@ -54,5 +50,8 @@ class ProfileSerializer(serializers.ModelSerializer):
    #  rating= (obj*5)/100
    #  ##
    #  return rating
-
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = ['watch']
         

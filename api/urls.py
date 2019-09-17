@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (UserCreateAPIView,WatchList,WatchDetail,UpdateWatch,DeleteWatch,CreateWatch)
+from .views import (UserCreateAPIView,WatchList,WatchDetail,UpdateWatch,DeleteWatch,CreateWatch,CartUpdate,CreateCart,CartList)
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
@@ -11,4 +11,8 @@ urlpatterns = [
     path('create/',CreateWatch.as_view(), name='create' ),
     path('detail/<int:watch_id>/',UpdateWatch.as_view(), name='update' ),
     path('detail/<int:watch_id>/',DeleteWatch.as_view(), name='delete' ),
+    path('list/cart/', CartList.as_view(), name='list-cart'),
+    path('update/cart/<int:watch_id>/', CartUpdate.as_view(),name='update-cart'),
+    path('create/cart/', CreateCart.as_view(),name='create-cart'),
+
 ]
