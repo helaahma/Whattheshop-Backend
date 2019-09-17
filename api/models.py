@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Brand(models.Model):
@@ -71,7 +73,12 @@ class Watch(models.Model):
 	
 	def __str__(self):
 		return str(self.model_name)
+# AddToCart
+class Cart(models.Model):
+	watch=models.ForeignKey(Watch,on_delete=models.CASCADE, related_name='watch')
+	total= models.PositiveIntegerField(default=0)
 
+@receiver(pre_save, sender=Cart)
 # To be expanded as need after meeting
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)

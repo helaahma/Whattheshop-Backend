@@ -1,8 +1,9 @@
-from rest_framework.generics import (ListAPIView, RetrieveAPIView,CreateAPIView, DestroyAPIView)
+from rest_framework.generics import (RetrieveUpdateAPIView,ListAPIView, RetrieveAPIView,CreateAPIView, DestroyAPIView)
 from .serializers import (UserCreateSerializer, WatchListSerializer, WatchDetailSerializer, ProfileSerializer,)
 from rest_framework.filters import (SearchFilter, OrderingFilter,)
 from .models import (Brand, Watch,Profile,)
 from .permissions import IsWatchOwner
+from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -30,7 +31,7 @@ class DeleteWatch(DestroyAPIView):
 	queryset = Watch.objects.all()
 	lookup_field = 'id'
 	lookup_url_kwarg = 'watch_id'
-	permission_classes = [IsAuthenticated, IsBookingOwner]
+	permission_classes = [IsAuthenticated, IsWatchOwner]
 
 class CreateWatch(CreateAPIView):
 	serializer_class = WatchDetailSerializer

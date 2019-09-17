@@ -21,7 +21,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class WatchListSerializer(serializers.ModelSerializer):
     class Meta:
         model=Watch
-        fields= ['brand','model_name', 'water_resistance', 'manufacture_year', 'price', 'availability','image ']
+        fields= ['brand','model_name', 'water_resistance', 'manufacture_year', 'price', 'availability','image']
 
 class WatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
