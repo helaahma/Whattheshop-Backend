@@ -28,6 +28,7 @@ class WatchDetailSerializer(serializers.ModelSerializer):
         model=Watch
         exclude= ['user']
 
+
 #comments & ratings and profile
 class CommentSerializer(serializers.Serializer):
     class Meta:
