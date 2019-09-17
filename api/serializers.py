@@ -26,7 +26,7 @@ class WatchListSerializer(serializers.ModelSerializer):
 class WatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=Watch
-        exclude= 'user'
+        exclude= ['user']
 
 
 
