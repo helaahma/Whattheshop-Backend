@@ -14,10 +14,10 @@ class Brand(models.Model):
 
 class Watch(models.Model):
 
-#	brand = models.ForeignKey(Brand, on_delete=models.CASCADE,  related_name="brand")
-	brand = models.CharField(max_length=100)
-	model_name = models.CharField(max_length=100)
-	case_size = models.IntegerField(validators=[MinValueValidator(20), MaxValueValidator(60)])
+#   brand = models.ForeignKey(Brand, on_delete=models.CASCADE,  related_name="brand")
+    brand = models.CharField(max_length=100)
+    model_name = models.CharField(max_length=100)
+    case_size = models.IntegerField(validators=[MinValueValidator(20), MaxValueValidator(60)])
     thickness = models.IntegerField(validators=[MinValueValidator(5),
                                        MaxValueValidator(30)],blank=True,null=True)
     lug_width = models.IntegerField(validators=[MinValueValidator(10),
