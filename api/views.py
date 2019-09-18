@@ -1,5 +1,5 @@
 from rest_framework.generics import (RetrieveUpdateAPIView,ListAPIView, RetrieveAPIView,CreateAPIView, DestroyAPIView)
-from .serializers import (CartSerializer, UserCreateSerializer, WatchListSerializer, WatchDetailSerializer, ProfileSerializer,)
+from .serializers import (CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, WatchDetailSerializer, ProfileSerializer,)
 from rest_framework.filters import (SearchFilter, OrderingFilter,)
 from .models import (Brand, Watch,Profile, Cart)
 from .permissions import IsWatchOwner
@@ -65,10 +65,10 @@ class CartUpdate(RetrieveUpdateAPIView):
 	lookup_url_kwarg = 'watch_id'
 	permission_classes = [IsAuthenticated]
 	def get_serializer_class(self,request):
-		if (self.request.Cart.status=False):
-			return serializer_class = CheckoutSerializer
+		if (self.request.Cart.status==False):
+			return CheckoutSerializer
 		else:
-			return serializer_class = CartSerializer
+			return CartSerializer
 
 class DeleteWatch(DestroyAPIView):
 	queryset = Watch.objects.all()
