@@ -55,4 +55,9 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = ['watch']
+#address
+class CheckoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Cart
+        fields= ['status']
         

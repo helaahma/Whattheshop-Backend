@@ -57,14 +57,25 @@ class CartList(ListAPIView):
 
 class CreateCart(CreateAPIView):
 	serializer_class = CartSerializer
-	# permission_classes = [IsAuthenticated]
+	permission_classes = [IsAuthenticated]
 
 class CartUpdate(RetrieveUpdateAPIView):
 	queryset = Watch.objects.all()
-	serializer_class = CartSerializer
 	lookup_field = 'id'
 	lookup_url_kwarg = 'watch_id'
-	# permission_classes = [IsAuthenticated, IsWatchOwner]
+	permission_classes = [IsAuthenticated]
+	def get_serializer_class(self,request):
+		if (self.request.Cart.status=False):
+			return serializer_class = CheckoutSerializer
+		else:
+			return serializer_class = CartSerializer
+
+class DeleteWatch(DestroyAPIView):
+	queryset = Watch.objects.all()
+	lookup_field = 'id'
+	lookup_url_kwarg = 'watch_id'
+	permission_classes = [IsAuthenticated]
+
 
 
 

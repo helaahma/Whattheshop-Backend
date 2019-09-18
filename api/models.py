@@ -79,6 +79,7 @@ class Watch(models.Model):
 class Cart(models.Model):
     watch=models.ManyToManyField(Watch)
     total= models.PositiveIntegerField(default=0)
+    status=models.BooleanField(default=False)
     timestamp=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return str(self.watch)
@@ -86,6 +87,7 @@ class Cart(models.Model):
 @receiver(post_save, sender=Cart)
 def update_cart_handler(sender, instance, **kwargs):
     instance.total += instance.watch.price
+    instance.status =True
     instance.timestamp = datetime.now()
 
 
