@@ -65,7 +65,7 @@ class CartUpdate(RetrieveUpdateAPIView):
 	lookup_url_kwarg = 'watch_id'
 	permission_classes = [IsAuthenticated]
 	def get_serializer_class(self,request):
-		if !self.request.Cart.status:
+		if (self.request.Cart.status=False):
 			return serializer_class = CheckoutSerializer
 		else:
 			return serializer_class = CartSerializer
