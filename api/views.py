@@ -1,5 +1,5 @@
 from rest_framework.generics import (RetrieveUpdateAPIView,ListAPIView, RetrieveAPIView,CreateAPIView, DestroyAPIView)
-from .serializers import (CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, WatchDetailSerializer, ProfileSerializer,)
+from .serializers import (CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer,)
 from rest_framework.filters import (SearchFilter, OrderingFilter,)
 from .models import (Brand, Watch,Profile, Cart)
 from .permissions import IsWatchOwner
@@ -50,19 +50,29 @@ class CreateWatch(CreateAPIView):
 #Cart CUD
 class CartList(ListAPIView):
 	queryset = Cart.objects.all()
-	serializer_class = CartSerializer
+	serializer_class = CartListSerializer
 	filter_backends = [SearchFilter, OrderingFilter]
 	search_fields = ['watch']
 
 
 class CreateCart(CreateAPIView):
+
 	serializer_class = CartSerializer
 	permission_classes = [IsAuthenticated]
 
+	def perform_create(self, serializer):
+		watch = Watch.objects.get(id=self.kwargs['watch_id'])
+		cart = Cart(user=self.request.user)
+		cart.save()
+		cart.watches.add(watch)
+		cart.save()
+		return cart
+
+
 class CartUpdate(RetrieveUpdateAPIView):
-	queryset = Watch.objects.all()
+	queryset = Cart.objects.all()
 	lookup_field = 'id'
-	lookup_url_kwarg = 'watch_id'
+	lookup_url_kwarg = 'cart_id'
 	permission_classes = [IsAuthenticated]
 	def get_serializer_class(self,request):
 		if (self.request.Cart.status==False):
@@ -70,11 +80,11 @@ class CartUpdate(RetrieveUpdateAPIView):
 		else:
 			return CartSerializer
 
-class DeleteWatch(DestroyAPIView):
-	queryset = Watch.objects.all()
-	lookup_field = 'id'
-	lookup_url_kwarg = 'watch_id'
-	permission_classes = [IsAuthenticated]
+# class DeleteWatch(DestroyAPIView):
+# 	queryset = Watch.objects.all()
+# 	lookup_field = 'id'
+# 	lookup_url_kwarg = 'watch_id'
+# 	permission_classes = [IsAuthenticated]
 
 
 

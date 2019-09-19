@@ -21,7 +21,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class WatchListSerializer(serializers.ModelSerializer):
     class Meta:
         model=Watch
-        fields= ['brand','model_name', 'water_resistance', 'manufacture_year', 'price', 'availability','image']
+        fields= ['id', 'brand','model_name', 'water_resistance', 'manufacture_year', 'price', 'availability','image']
 
 class WatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -54,7 +54,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['watch']
+        fields = []
+
+class CartListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = "__all__"
 #address
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
