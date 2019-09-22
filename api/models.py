@@ -75,6 +75,24 @@ class Watch(models.Model):
 # To be expanded as need after meeting
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+	phone_number = models.PositiveIntegerField(blank=True, null = True)
 	def __str__(self):
 		return str(self.user)
+
+class Address (models.Model):
+    COUNTRIES = (
+        ('Kuwait', 'Kuwait'),
+        ('Oman','Oman'),
+        ('UAE','UAE'),
+        ('KSA','KSA'),
+        ('Bahrain','Bahrain'),
+        ('Qatar','Qatar'),
+        ('other','other'),
+    )
+    user = models.OneToOneField(User , on_delete = models.CASCADE)
+    country = models.CharField( choices = COUNTRIES , max_length = 20, default='Kuwait')
+    city = models.CharField( max_length = 100, blank = True)
+    governate = models.CharField( max_length = 100, blank = True)
+    zipcode = models.CharField(max_length = 5, blank = True)
+    street_line1 = models.CharField( max_length = 100, blank = True)
+    street_line2 = models.CharField( max_length = 100, blank = True)
