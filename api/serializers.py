@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import  Watch, Profile,Cart
+from .models import  Watch, Profile,Cart, Address
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -78,5 +78,8 @@ class CheckoutSerializer(serializers.ModelSerializer):
         model= Cart
         fields= []
     
-
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = '__all__'
             
