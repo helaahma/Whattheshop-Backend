@@ -76,12 +76,19 @@ class Watch(models.Model):
     def __str__(self):
         return str(self.model_name)
 # AddToCart
+# class Item(models.Model):
+#     item=models.PositiveIntegerField(default=1)
+
+# @receiver(pre_save, sender=Item)
+# def add_item(sender, instance,*arg,**kwargs):
+#     instance.items+=instance.items
 class Cart(models.Model):
-    watches = models.ManyToManyField(Watch)
+    watches = models.ManyToManyField(Watch, related_name="carts")
     user = models.ForeignKey(User, on_delete=models.CASCADE,  related_name="carts")
     # total= models.PositiveIntegerField(default=0)
     status = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    # items=models.OneToOneField(Item, on_delete=models.CASCADE)
     def total(self):
         return sum(self.watches.all().values_list('price', flat=True))
         
@@ -98,6 +105,7 @@ class Cart(models.Model):
 #   for watch in instance.watches.all():
 #       total = total + watch.price
 #   instance.total = total
+
 
 
 # To be expanded as need after meeting
