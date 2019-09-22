@@ -66,12 +66,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = "__all__"
+        fields = ['id']
 
 class CartListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['watches', 'timestamp',] 
+        fields = ['watches', 'timestamp']
 #address
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
