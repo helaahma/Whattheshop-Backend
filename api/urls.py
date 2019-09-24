@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (CartItemDelete,CartHistory,Checkout,ProfileUpdate,UserCreateAPIView,
+from .views import (CartItemDelete,CartHistory,Checkout,ProfileUpdate,ProfileDetail,UserCreateAPIView,
                     WatchList,WatchDetail,UpdateWatch,DeleteWatch,CreateWatch,
                     CartUpdate,CreateCart,CartList, CreateAddressAPIView, EditAddressAPIView, DestroyAddressAPIView)
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -20,6 +20,7 @@ urlpatterns = [
     path('update/<int:watch_id>/',UpdateWatch.as_view(), name='update' ),
     path('delete/<int:watch_id>/',DeleteWatch.as_view(), name='delete' ),
     path('profile/update/<int:profile_id>/',ProfileUpdate.as_view(), name='profile_update' ),
+    path('profile/detail/<int:profile_id>/',ProfileDetail.as_view(), name='profile_detail' ),
     path('address/create/',CreateAddressAPIView.as_view(), name = 'address-create' ),
     path('address/<int:address_id>/edit/',EditAddressAPIView.as_view(), name = 'address-edit' ),
     path('address/<int:address_id>/delete/',DestroyAddressAPIView.as_view(), name = 'address-delete' ),

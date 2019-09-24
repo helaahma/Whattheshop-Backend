@@ -22,6 +22,12 @@ class ProfileUpdate(RetrieveUpdateAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'profile_id'
 
+class ProfileDetail(RetrieveAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'profile_id'
+
 class WatchList(ListAPIView):
     queryset = Watch.objects.all()
     serializer_class = WatchListSerializer
