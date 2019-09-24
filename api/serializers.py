@@ -2,13 +2,15 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import  Watch, Profile,Cart, Address
 from django.core.validators import MaxValueValidator, MinValueValidator
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
+    access=serializers.CharField(read_only=True)
     password = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = ['username', 'password', 'first_name', 'last_name', 'email', 'date_joined', 'last_login']
+        fields = ['username', 'password', 'first_name', 'last_name', 'email', 'date_joined', 'last_login','access']
 
     def create(self, validated_data):
         username = validated_data['username']
@@ -16,6 +18,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
         new_user = User(username=username)
         new_user.set_password(password)
         new_user.save()
+        refresh = RefreshToken.for_user(new_user)
+        validated_data['access']=str(refresh.access_token)
         return validated_data
 
 class WatchListSerializer(serializers.ModelSerializer):
@@ -35,15 +39,15 @@ class CreateSerializer(serializers.ModelSerializer):
 
 
 #comments & ratings and profile
-class CommentSerializer(serializers.Serializer):
-    class Meta:
-        email = serializers.EmailField()
-        content = serializers.CharField(max_length=200, required=True)
-        created = serializers.DateTimeField()
+# class CommentSerializer(serializers.Serializer):
+#     class Meta:
+#         email = serializers.EmailField()
+#         content = serializers.CharField(max_length=200, required=True)
+#         created = serializers.DateTimeField()
 
-class RatingSerializer(serializers.Serializer):
-    class Meta:
-        Rating = serializers.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+# class RatingSerializer(serializers.Serializer):
+#     class Meta:
+#         Rating = serializers.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,12 +56,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     user=UserSerializer()
-    comment= CommentSerializer()
-    rating= RatingSerializer()
+    # comment= CommentSerializer()
+    # rating= RatingSerializer()
     class Meta:
         model= Profile
         fields=[]
-        # fields=['user','comment','rating']
 
    # def get_rating(self,obj):
    #  rating= (obj*5)/100
@@ -66,12 +69,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = "__all__"
+        fields = []
 
 class CartListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['watches', 'timestamp',] 
+        fields = ['watches', 'timestamp','total'] 
 #address
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
