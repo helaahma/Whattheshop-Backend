@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import  Watch, Profile,Cart, Address
+from .models import  Watch, Profile,Cart
 from django.core.validators import MaxValueValidator, MinValueValidator
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -66,6 +66,27 @@ class ProfileSerializer(serializers.ModelSerializer):
    #  rating= (obj*5)/100
    #  ##
    #  return rating
+
+class ProfileDetailSerializer(serializers.ModelSerializer):
+    user=UserSerializer()
+    # comment= CommentSerializer()
+    # rating= RatingSerializer()
+    class Meta:
+        model= Profile
+        fields='__all__'
+
+   # def get_rating(self,obj):
+   #  rating= (obj*5)/100
+   #  ##
+   #  return rating
+class ProfileCreateSerializer(serializers.ModelSerializer):
+    # user=UserSerializer()
+    # comment= CommentSerializer()
+    # rating= RatingSerializer()
+    class Meta:
+        model= Profile
+        exclude= ['user']
+
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
@@ -81,8 +102,8 @@ class CheckoutSerializer(serializers.ModelSerializer):
         model= Cart
         fields= []
     
-class AddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Address
-        fields = '__all__'
+# class AddressSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Address
+#         fields = '__all__'
             

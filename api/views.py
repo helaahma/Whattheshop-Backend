@@ -1,9 +1,8 @@
 from rest_framework.generics import (RetrieveUpdateAPIView,ListAPIView, RetrieveAPIView,CreateAPIView, DestroyAPIView)
 from rest_framework.views import APIView
-from .serializers import (CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer,)
-from .serializers import (CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer,AddressSerializer,)
+from .serializers import (ProfileCreateSerializer,CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer, ProfileDetailSerializer)
 from rest_framework.filters import (SearchFilter, OrderingFilter,)
-from .models import ( Watch,Profile, Cart, Address)
+from .models import ( Watch,Profile, Cart,)
 from .permissions import IsWatchOwner
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -24,9 +23,18 @@ class ProfileUpdate(RetrieveUpdateAPIView):
 
 class ProfileDetail(RetrieveAPIView):
     queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+    serializer_class = ProfileDetailSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'profile_id'
+
+class ProfileCreate(CreateAPIView):
+
+    serializer_class = ProfileCreateSerializer
+    permission_classes = [IsAuthenticated]
+    
+        
+    def perform_create(self,serializer):
+            serializer.save(user=self.request.user)
 
 class WatchList(ListAPIView):
     queryset = Watch.objects.all()
@@ -151,17 +159,17 @@ class CartItemDelete(DestroyAPIView):
 #   lookup_url_kwarg = 'watch_id'
 #   permission_classes = [IsAuthenticated]
 
-class CreateAddressAPIView(CreateAPIView):
-	serializer_class = AddressSerializer
+# class CreateAddressAPIView(CreateAPIView):
+# 	serializer_class = AddressSerializer
 
-class EditAddressAPIView(RetrieveUpdateAPIView):
-	queryset = Address.objects.all()
-	serializer_class = AddressSerializer
-	lookup_field = 'id'
-	lookup_url_kwarg = 'address_id'
+# class EditAddressAPIView(RetrieveUpdateAPIView):
+# 	queryset = Address.objects.all()
+# 	serializer_class = AddressSerializer
+# 	lookup_field = 'id'
+# 	lookup_url_kwarg = 'address_id'
 
-class DestroyAddressAPIView(DestroyAPIView):
-	queryset = Address.objects.all()
-	serializer_class = AddressSerializer
-	lookup_field = 'id'
-	lookup_url_kwarg = 'address_id'	
+# class DestroyAddressAPIView(DestroyAPIView):
+# 	queryset = Address.objects.all()
+# 	serializer_class = AddressSerializer
+# 	lookup_field = 'id'
+# 	lookup_url_kwarg = 'address_id'	
