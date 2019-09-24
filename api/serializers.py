@@ -66,6 +66,20 @@ class ProfileSerializer(serializers.ModelSerializer):
    #  rating= (obj*5)/100
    #  ##
    #  return rating
+
+class ProfileDetailSerializer(serializers.ModelSerializer):
+    user=UserSerializer()
+    # comment= CommentSerializer()
+    # rating= RatingSerializer()
+    class Meta:
+        model= Profile
+        fields='__all__'
+
+   # def get_rating(self,obj):
+   #  rating= (obj*5)/100
+   #  ##
+   #  return rating
+
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart

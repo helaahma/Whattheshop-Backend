@@ -1,7 +1,6 @@
 from rest_framework.generics import (RetrieveUpdateAPIView,ListAPIView, RetrieveAPIView,CreateAPIView, DestroyAPIView)
 from rest_framework.views import APIView
-from .serializers import (CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer,)
-from .serializers import (CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer,AddressSerializer,)
+from .serializers import (CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer,AddressSerializer, ProfileDetailSerializer)
 from rest_framework.filters import (SearchFilter, OrderingFilter,)
 from .models import ( Watch,Profile, Cart, Address)
 from .permissions import IsWatchOwner
@@ -24,7 +23,7 @@ class ProfileUpdate(RetrieveUpdateAPIView):
 
 class ProfileDetail(RetrieveAPIView):
     queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+    serializer_class = ProfileDetailSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'profile_id'
 
