@@ -83,8 +83,9 @@ class CreateCart(CreateAPIView):
 
         if (self.request.user.carts.filter(status=False)):
             cart = Cart.objects.get(user=self.request.user, status= False)
-            cart.watches.add(watch)
-            cart.save()
+            if not cart.watches.filter(id=watch.id):
+                cart.watches.add(watch)
+                cart.save()
         else:
             cart = Cart(user=self.request.user)
             cart.save()
@@ -94,6 +95,7 @@ class CreateCart(CreateAPIView):
 
 class Checkout (APIView):
     serializer_class= CheckoutSerializer
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
         cart = Cart.objects.get(user=self.request.user, status=False)
