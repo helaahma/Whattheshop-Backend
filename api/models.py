@@ -84,6 +84,8 @@ class Watch(models.Model):
 # @receiver(pre_save, sender=Item)
 # def add_item(sender, instance,*arg,**kwargs):
 #     instance.items+=instance.items
+
+
 class Cart(models.Model):
     watches = models.ManyToManyField(Watch, related_name="carts")
     user = models.ForeignKey(User, on_delete=models.CASCADE,  related_name="carts")
@@ -134,3 +136,7 @@ class Profile(models.Model):
     street_line2 = models.CharField( max_length = 100, blank = True)
     def __str__(self):
         return str(self.user)
+
+@receiver(post_save, sender=User)
+def profile_creation( instance,*arg,**kwargs):
+    Profile.objects.create(user=instance)

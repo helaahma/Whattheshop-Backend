@@ -1,6 +1,6 @@
 from rest_framework.generics import (RetrieveUpdateAPIView,ListAPIView, RetrieveAPIView,CreateAPIView, DestroyAPIView)
 from rest_framework.views import APIView
-from .serializers import (ProfileCreateSerializer,CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer, ProfileDetailSerializer)
+from .serializers import (CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer, ProfileDetailSerializer)
 from rest_framework.filters import (SearchFilter, OrderingFilter,)
 from .models import ( Watch,Profile, Cart,)
 from .permissions import IsWatchOwner
@@ -27,14 +27,6 @@ class ProfileDetail(RetrieveAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'profile_id'
 
-class ProfileCreate(CreateAPIView):
-
-    serializer_class = ProfileCreateSerializer
-    permission_classes = [IsAuthenticated]
-    
-        
-    def perform_create(self,serializer):
-            serializer.save(user=self.request.user)
 
 class WatchList(ListAPIView):
     queryset = Watch.objects.all()

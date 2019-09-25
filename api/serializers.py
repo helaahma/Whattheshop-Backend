@@ -50,7 +50,7 @@ class CreateSerializer(serializers.ModelSerializer):
 #         Rating = serializers.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
 
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
+    class Meta: 
         model=User
         fields=['first_name', 'last_name',]
 
@@ -79,13 +79,6 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
    #  rating= (obj*5)/100
    #  ##
    #  return rating
-class ProfileCreateSerializer(serializers.ModelSerializer):
-    # user=UserSerializer()
-    # comment= CommentSerializer()
-    # rating= RatingSerializer()
-    class Meta:
-        model= Profile
-        exclude= ['user']
 
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
