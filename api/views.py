@@ -37,7 +37,7 @@ class ProfileCreate(CreateAPIView):
             serializer.save(user=self.request.user)
 
 class WatchList(ListAPIView):
-    queryset = Watch.objects.all()
+    queryset = Watch.objects.filter(availability=True)
     serializer_class = WatchListSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['model_name', 'brand', 'price', 'availability']
@@ -75,6 +75,9 @@ class CartList(ListAPIView):
     serializer_class = CartListSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['watch']
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
 
 
 class CreateCart(CreateAPIView):
