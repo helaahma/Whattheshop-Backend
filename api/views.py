@@ -16,16 +16,19 @@ class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
 
 class ProfileUpdate(RetrieveUpdateAPIView):
-    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    lookup_field = 'id'
-    lookup_url_kwarg = 'profile_id'
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.profile
 
 class ProfileDetail(RetrieveAPIView):
-    queryset = Profile.objects.all()
     serializer_class = ProfileDetailSerializer
-    lookup_field = 'id'
-    lookup_url_kwarg = 'profile_id'
+    permission_classes = [IsAuthenticated]
+
+
+    def get_object(self):
+        return self.request.user.profile
 
 
 class WatchList(ListAPIView):

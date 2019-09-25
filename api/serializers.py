@@ -55,12 +55,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields=['first_name', 'last_name',]
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user=UserSerializer()
     # comment= CommentSerializer()
     # rating= RatingSerializer()
     class Meta:
         model= Profile
-        fields=[]
+        exclude= ['user']
 
    # def get_rating(self,obj):
    #  rating= (obj*5)/100

@@ -19,7 +19,7 @@ urlpatterns = [
     path('history/', CartHistory.as_view(), name = 'history'),
     path('update/<int:watch_id>/',UpdateWatch.as_view(), name='update' ),
     path('delete/<int:watch_id>/',DeleteWatch.as_view(), name='delete' ),
-    path('profile/update/<int:profile_id>/',ProfileUpdate.as_view(), name='profile_update' ),
-    path('profile/detail/<int:profile_id>/',ProfileDetail.as_view(), name='profile_detail' ),
+    path('profile/update/',ProfileUpdate.as_view(), name='profile_update' ),
+    path('profile/detail/',ProfileDetail.as_view(), name='profile_detail' ),
 
 ]
