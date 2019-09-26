@@ -32,7 +32,7 @@ class ProfileDetail(RetrieveAPIView):
 
 
 class WatchList(ListAPIView):
-    queryset = Watch.objects.filter(availability=True)
+    queryset = Watch.objects.all()
     serializer_class = WatchListSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['model_name', 'brand', 'price', 'availability']
