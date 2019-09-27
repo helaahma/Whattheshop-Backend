@@ -36,7 +36,7 @@ class Watch(models.Model):
     availability = models.BooleanField(default=True)
     box_papers = models.CharField(max_length=100)
     strap = models.CharField(max_length=100,blank=True,null=True)
-    functions = models.CharField(max_length=100,blank=True,null=True)
+    functions = models.CharField(max_length=100,blank=True,null=True) 
 
     MOVEMENT_CHOICES = [
         ('automatic', 'automatic'),
@@ -128,12 +128,12 @@ class Profile(models.Model):
         ('Qatar','Qatar'),
         ('other','other'),
     )
-    country = models.CharField( choices = COUNTRIES , max_length = 20, default='Kuwait',blank = True)
-    city = models.CharField( max_length = 100, blank = True)
-    governate = models.CharField( max_length = 100, blank = True)
-    zipcode = models.CharField(max_length = 5, blank = True)
-    street_line1 = models.CharField( max_length = 100, blank = True)
-    street_line2 = models.CharField( max_length = 100, blank = True)
+    country = models.CharField( choices = COUNTRIES , max_length = 20, default='Kuwait',blank=True, null = True)
+    city = models.CharField( max_length = 100, blank=True, null = True)
+    governate = models.CharField( max_length = 100, blank=True, null = True)
+    zipcode = models.CharField(max_length = 5, blank=True, null = True)
+    street_line1 = models.CharField( max_length = 100, blank=True, null = True)
+    street_line2 = models.CharField( max_length = 100, blank=True, null = True)
     def __str__(self):
         return str(self.user)
 
