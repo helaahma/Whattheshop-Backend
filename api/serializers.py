@@ -31,6 +31,10 @@ class WatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=Watch
         exclude= ['user']
+class WatchUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Watch
+        fields= ['availability']
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -80,14 +84,16 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
    #  return rating
 
 class CartSerializer(serializers.ModelSerializer):
+    # watches=WatchDetailSerializer(many=True)
     class Meta:
         model = Cart
-        fields = []
+        fields = ['id','user','status','timestamp']
+        read_only_fields = ['id','status','timestamp']
 
 class CartListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ['watches', 'timestamp','total'] 
+        fields = ['id','watches','status','timestamp']
 #address
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
