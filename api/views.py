@@ -43,12 +43,24 @@ class WatchDetail(RetrieveAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'watch_id'
 
-class UpdateWatch(RetrieveUpdateAPIView):
-    queryset = Watch.objects.all()
-    lookup_field = 'id'
-    lookup_url_kwarg = 'watch_id'
+# class UpdateWatch(RetrieveUpdateAPIView):
+#     queryset = Watch.objects.all()
+#     lookup_field = 'id'
+#     lookup_url_kwarg = 'watch_id'
+#     permission_classes = [IsAuthenticated, IsWatchOwner]
+#     serializer_class = WatchUpdateSerializer
+
+
+class UpdateWatch(APIView):
     permission_classes = [IsAuthenticated, IsWatchOwner]
-    serializer_class = WatchUpdateSerializer
+    
+    def put(self, request, watch_id, *args, **kwargs):
+        watch = Watch.objects.get(id=watch_id)
+        watch.availability = not watch.availability
+        watch.save()
+        return Response(WatchUpdateSerializer(watch).data)
+
+
 
 class DeleteWatch(DestroyAPIView):
     queryset = Watch.objects.all()
