@@ -1,6 +1,6 @@
 from rest_framework.generics import (RetrieveUpdateAPIView,ListAPIView, RetrieveAPIView,CreateAPIView, DestroyAPIView)
 from rest_framework.views import APIView
-from .serializers import (CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer, ProfileDetailSerializer)
+from .serializers import (WatchUpdateSerializer,CreateSerializer,CheckoutSerializer,CartSerializer, UserCreateSerializer, WatchListSerializer, CartListSerializer, WatchDetailSerializer, ProfileSerializer, ProfileDetailSerializer)
 from rest_framework.filters import (SearchFilter, OrderingFilter,)
 from .models import ( Watch,Profile, Cart,)
 from .permissions import IsWatchOwner
@@ -48,7 +48,7 @@ class UpdateWatch(RetrieveUpdateAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'watch_id'
     permission_classes = [IsAuthenticated, IsWatchOwner]
-    serializer_class = WatchDetailSerializer
+    serializer_class = WatchUpdateSerializer
 
 class DeleteWatch(DestroyAPIView):
     queryset = Watch.objects.all()
@@ -75,7 +75,7 @@ class CartList(ListAPIView):
         return Cart.objects.filter(user=self.request.user)
 
 
-class CreateCart(CreateAPIView):
+class CreateCart(APIView):
 
     serializer_class = CartSerializer
     permission_classes = [IsAuthenticated]
@@ -90,12 +90,12 @@ class CreateCart(CreateAPIView):
     ##delete watch
     ##user history
 
-    def perform_create(self,serializer):
-        watch = Watch.objects.get(id=self.kwargs['watch_id'])
+    def post(self, request, *args, **kwargs):
+        watch = Watch.objects.get(id=kwargs.get('watch_id'))
 
         if (self.request.user.carts.filter(status=False)):
             cart = Cart.objects.get(user=self.request.user, status= False)
-            if not cart.watches.filter(id=watch.id):
+            if not cart.watches.get(id=watch.id):
                 cart.watches.add(watch)
                 cart.save()
         else:
@@ -103,7 +103,7 @@ class CreateCart(CreateAPIView):
             cart.save()
             cart.watches.add(watch)
             cart.save()
-        return cart
+        return Response(CartSerializer(cart).data)
 
 class Checkout (APIView):
     serializer_class= CheckoutSerializer
@@ -131,11 +131,11 @@ class CartUpdate(RetrieveUpdateAPIView):
     lookup_url_kwarg = 'cart_id'
     permission_classes = [IsAuthenticated]
 
-    
 class CartHistory(ListAPIView):
     serializer_class = CartSerializer
     def get_queryset(self):
-        Cart.objects.filter(user=self.request.user, status=True)
+       return Cart.objects.filter(user=self.request.user, status=True)
+
 
 class CartItemDelete(DestroyAPIView):
     queryset = Watch.objects.all()
