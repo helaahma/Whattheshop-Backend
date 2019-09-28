@@ -28,7 +28,7 @@ class Watch(models.Model):
                                        MaxValueValidator(70)],blank=True,null=True)
     water_resistance = models.IntegerField(validators=[MinValueValidator(0),
                                        MaxValueValidator(20000)])
-    manufacture_year = models.IntegerField(validators=[MinValueValidator(1700)],blank=True,null=True)
+    manufacture_year= models.IntegerField(validators=[MinValueValidator(1700)],blank=True,null=True)
     price = models.DecimalField(max_digits=10, decimal_places=3)
     user = models.ForeignKey(User, on_delete=models.CASCADE,  related_name="watches")
     created = models.DateTimeField(auto_now_add=True)

@@ -83,17 +83,22 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
    #  ##
    #  return rating
 
-class CartSerializer(serializers.ModelSerializer):
-    # watches=WatchDetailSerializer(many=True)
+
+class CarttoWatchSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cart
-        fields = ['id','user','status','timestamp']
-        read_only_fields = ['id','status','timestamp']
+        model = Watch
+        fields=['brand','model_name','manufacture_year']
 
 class CartListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = ['id','watches','status','timestamp']
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = ['id','user','status','timestamp','total']
+        read_only=['id','status','timestamp','total']
+
 #address
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:

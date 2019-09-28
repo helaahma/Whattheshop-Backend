@@ -103,10 +103,12 @@ class CreateCart(APIView):
             cart.save()
             cart.watches.add(watch)
             cart.save()
-        return Response(CartSerializer(cart).data)
+        response = CartSerializer(cart).data
+        response['watch'] = WatchListSerializer(watch).data
+        return Response(response)
 
 class Checkout (APIView):
-    serializer_class= CheckoutSerializer
+    serializer_class= CartListSerializer
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
@@ -158,16 +160,16 @@ class CartItemDelete(DestroyAPIView):
 #   permission_classes = [IsAuthenticated]
 
 # class CreateAddressAPIView(CreateAPIView):
-# 	serializer_class = AddressSerializer
+#   serializer_class = AddressSerializer
 
 # class EditAddressAPIView(RetrieveUpdateAPIView):
-# 	queryset = Address.objects.all()
-# 	serializer_class = AddressSerializer
-# 	lookup_field = 'id'
-# 	lookup_url_kwarg = 'address_id'
+#   queryset = Address.objects.all()
+#   serializer_class = AddressSerializer
+#   lookup_field = 'id'
+#   lookup_url_kwarg = 'address_id'
 
 # class DestroyAddressAPIView(DestroyAPIView):
-# 	queryset = Address.objects.all()
-# 	serializer_class = AddressSerializer
-# 	lookup_field = 'id'
-# 	lookup_url_kwarg = 'address_id'	
+#   queryset = Address.objects.all()
+#   serializer_class = AddressSerializer
+#   lookup_field = 'id'
+#   lookup_url_kwarg = 'address_id' 
